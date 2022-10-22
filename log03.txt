@@ -1,0 +1,55 @@
+Carregando TESTE-1
+Carregando TESTE-2
+Carregando TESTE-3
+Carregando TESTE-4
+Carregando TESTE-5
+Carregando TESTE-6
+Carregando TESTE-7
+Carregando TESTE-8
+Carregando TESTE-9
+Carregando TESTE-10
+PROCESSO EM EXE = TESTE-7 CREDITO = 12
+Executando TESTE-7
+PROCESSO EM EXE = TESTE-7 CREDITO = 11
+Executando TESTE-7
+E/S iniciada em TESTE-7
+Interrompendo TESTE-7 após 0 instruções
+PROCESSO EM EXE = TESTE-4 CREDITO = 10
+Executando TESTE-4
+E/S iniciada em TESTE-4
+Interrompendo TESTE-4 após 1 instruções
+PROCESSO EM EXE = TESTE-7 CREDITO = 10
+Executando TESTE-7
+PROCESSO EM EXE = TESTE-4 CREDITO = 9
+Executando TESTE-4
+E/S iniciada em TESTE-4
+Interrompendo TESTE-4 após 1 instruções
+PROCESSO EM EXE = TESTE-7 CREDITO = 9
+Executando TESTE-7
+PROCESSO EM EXE = TESTE-4 CREDITO = 8
+Executando TESTE-4
+E/S iniciada em TESTE-4
+Interrompendo TESTE-4 após 1 instruções
+PROCESSO EM EXE = TESTE-7 CREDITO = 8
+Executando TESTE-7
+E/S iniciada em TESTE-7
+Interrompendo TESTE-7 após 2 instruções
+PROCESSO EM EXE = TESTE-8 CREDITO = 8
+Executando TESTE-8
+PROCESSO EM EXE = TESTE-9 CREDITO = 8
+Executando TESTE-9
+E/S iniciada em TESTE-9
+Interrompendo TESTE-9 após 2 instruções
+PROCESSO EM EXE = TESTE-8 CREDITO = 7
+Executando TESTE-8
+PROCESSO EM EXE = TESTE-9 CREDITO = 7
+Executando TESTE-9
+PROCESSO EM EXE = TESTE-7 CREDITO = 7
+Executando TESTE-7
+TESTE-7 terminado. X=12. Y=3
+PROCESSO EM EXE = TESTE-4 CREDITO = 7
+Executando TESTE-4
+E/S iniciada em TESTE-4
+Interrompendo TESTE-4 após 1 instruções
+PROCESSO EM EXE = TESTE-7 CREDITO = 6
+Executando TESTE-7
