@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package escalonador;
 
 import java.util.*;
@@ -16,9 +12,7 @@ public class BCP implements Comparable<BCP>{
 	private int regX;
 	private int regY;
         private String estado;
-	
-	//int flag;
-        
+	        
     public BCP (Processo processo, int prioridade){
             
         this.processo = processo;
@@ -30,15 +24,30 @@ public class BCP implements Comparable<BCP>{
         this.regY = 0;
         this.estado = "PRONTO";
             
+    }  
+    
+    public void descontaCredito(){
+        
+        this.credito = this.credito - 1;
     }
     
+   @Override
+    public int compareTo(BCP bcp) {
+            
+	if (this.credito > bcp.credito) return -1;
+	else if (this.credito < bcp.credito) return 1;
+        else return 0;   
+        
+    }
+        
+    @Override
+    public String toString(){
+    
+        return this.processo.getNome();
+    }
     
     public int getPrioridade() {
         return prioridade;
-    }
-
-    public void setPrioridade(int prioridade) {
-        this.prioridade = prioridade;
     }
 
     public int getCredito() {
@@ -87,27 +96,6 @@ public class BCP implements Comparable<BCP>{
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-    
-    
-    public void descontaCredito(){
-        
-        this.credito = this.credito - 1;
-    }
-    
-   @Override
-    public int compareTo(BCP bcp) {
-            
-	if (this.credito > bcp.credito) return -1;
-	else if (this.credito < bcp.credito) return 1;
-        else return 0;   
-        
-    }
-        
-    @Override
-    public String toString(){
-    
-        return "nome: " + this.processo.getNome() +  " credito = " + this.credito;
     }
     
 }

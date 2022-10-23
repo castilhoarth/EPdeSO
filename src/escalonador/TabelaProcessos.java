@@ -1,16 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package escalonador;
 
+import static escalonador.ListaProntos.listaProntos;
 import java.util.LinkedList;
 
-/**
- *
- * @author caiokatsumi
- */
 public class TabelaProcessos {
     
     protected static LinkedList<BCP> tabelaProcessos = new LinkedList<>();
+    
+    
+    public static void tabelaZerada() {
+       
+		for (BCP aux : tabelaProcessos) {
+                    
+			if (aux.getCredito() != 0) return; 
+		}
+                
+		for (BCP aux : tabelaProcessos) {
+                    
+			aux.setCredito(aux.getPrioridade());
+		}		
+    }
 }

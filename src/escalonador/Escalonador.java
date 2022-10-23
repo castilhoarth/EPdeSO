@@ -1,6 +1,4 @@
-
 package escalonador;
-
 
 import java.io.*;
 import java.util.*;
@@ -10,11 +8,10 @@ public class Escalonador {
 
     private static int quantum; 
     private static int interrupcoes = 0; 
-    private static int instrucoes = 0; // contador para a média do número de instruções por quantum
-    private static int quantumTotal = 0;// contador geral de quantuns, em relação a todos os processos
+    private static int instrucoes = 0; 
     private static double resultadoInterrupcoes = 0;
     private static double resultadoInstrucoes = 0;
-    private final static int maxProcessos = 10; //total de processos a serem executados
+    private final static int maxProcessos = 10; 
     private static int[] prioridade = new int[21];
         
     public static void main(String[] args) throws IOException {
@@ -23,7 +20,6 @@ public class Escalonador {
         BufferedReader qt = new BufferedReader(new FileReader(new File("src/programas/quantum.txt")));
 	quantum = Integer.parseInt(qt.readLine());
 	qt.close();
-        //System.out.println(quantum);
         
         BufferedReader br = new BufferedReader(new FileReader(new File("src/programas/prioridades.txt")));
 	for (int i = 0; i < maxProcessos; i++) {
@@ -66,7 +62,7 @@ public class Escalonador {
         }
         
                
-        /*
+        
         if (quantum < 10 && quantum > 0) {
             
             System.setOut(new PrintStream(new FileOutputStream("log0" + quantum + ".txt")));
@@ -75,132 +71,125 @@ public class Escalonador {
             
             System.setOut(new PrintStream( new FileOutputStream("log"+quantum + ".txt")));
             
-        }*/
+        }
+        
+        Collections.sort(ListaProntos.listaProntos);
+            
+        for (BCP bcps : ListaProntos.listaProntos) {
+            
+            System.out.println("Carregando " + bcps.processo.getNome());
+        }
             
             
-            for (BCP bcps : TabelaProcessos.tabelaProcessos) {
-		System.out.println("Carregando " + bcps.processo.getNome());
-            }
-            
-            
-            while (TabelaProcessos.tabelaProcessos.size() > 0){
+        while (TabelaProcessos.tabelaProcessos.size() > 0){
                 
                 
-                if (ListaProntos.listaProntos.size() > 0) {
+            if (ListaProntos.listaProntos.size() > 0) {
                     
-                    int time = 1;
+                int count = 1;
                     
-                    ListaProntos.ordenarProntos();
+                ListaProntos.ordenarProntos();
                                         
                     
-                    BCP processoAtual = ListaProntos.listaProntosOrdenados.poll();
-                    ListaProntos.listaProntos.remove(processoAtual);
+                BCP processoAtual = ListaProntos.listaProntosOrdenados.poll();
+                ListaProntos.listaProntos.remove(processoAtual);
                     
-                    if (processoAtual == null) continue;
+                if (processoAtual == null) continue;
                     
-                    processoAtual.setEstado("EXECUTANDO");
+                processoAtual.setEstado("EXECUTANDO");
                     
-                    System.out.println("Executando " + processoAtual.processo.getNome() + " Créditos: " + processoAtual.getCredito());
-                    processoAtual.descontaCredito();
+                System.out.println("Executando " + processoAtual.processo.getNome() + " Créditos: " + processoAtual.getCredito());
+                processoAtual.descontaCredito();
                     
-                    while(time <= quantum){
+                while(count <= quantum){
                         
-                        String proxInstrucao = processoAtual.processo.getInstrucao(processoAtual.getPC());
+                    String proxInstrucao = processoAtual.processo.getInstrucao(processoAtual.getPC());
                         
-                        if ("COM".equals(proxInstrucao)){
+                    if ("COM".equals(proxInstrucao)){
                             
-                            time++;
-                            processoAtual.setPC(processoAtual.getPC()+ 1);
-                            continue;
-                        }
+                        processoAtual.setPC(processoAtual.getPC()+ 1);
+                    }
                         
-                        else if (proxInstrucao.contains("X=")){
+                    else if (proxInstrucao.contains("X=")){
                             
-                            processoAtual.setRegX(Integer.parseInt(proxInstrucao.substring(2)));
+                        processoAtual.setRegX(Integer.parseInt(proxInstrucao.substring(2)));
                             
-                            time++;
-                            processoAtual.setPC(processoAtual.getPC()+ 1);
-                            continue;
-                        }
-                        
-                        else if (proxInstrucao.contains("Y=")){
-                            
-                            processoAtual.setRegY(Integer.parseInt(proxInstrucao.substring(2)));
-                            
-                            time++;
-                            processoAtual.setPC(processoAtual.getPC()+ 1);
-                            continue;
-                        }
-                        
-                         
-                        else if ("E/S".equals(proxInstrucao)){
-                            
-                            System.out.println("E/S iniciada em " + processoAtual.processo.getNome());
-                            
-                            processoAtual.setEstado("BLOQUEADO");
-                            processoAtual.setTempoES(2);
-                            ListaBloqueados.listaBloqueados.add(processoAtual);
-                            
-                            System.out.println("Interrompendo "	+ processoAtual.processo.getNome() + " após " + time+ " instruções");
-                            
-                            time++;
-                            processoAtual.setPC(processoAtual.getPC()+ 1);
-                            break;
-                        }
-                        
-                        else if ("SAIDA".equals(proxInstrucao)){
-                            
-                            System.out.println(processoAtual.processo.getNome() + " terminado. X=" + processoAtual.getRegX() + ". Y=" + processoAtual.getRegY());
-                            
-                            processoAtual.setEstado("TERMINADO");
-                            TabelaProcessos.tabelaProcessos.remove(processoAtual);
-                            
-                            time++;
-                            break;
-                        }
-                        
-                        
+                        processoAtual.setPC(processoAtual.getPC()+ 1);
                     }
                     
-                    if(processoAtual.getEstado().equals("EXECUTANDO")) {
+                    else if (proxInstrucao.contains("Y=")){
                         
-                        time--;
-                        processoAtual.setEstado("PRONTO");
+                        processoAtual.setRegY(Integer.parseInt(proxInstrucao.substring(2)));
+                            
+                        processoAtual.setPC(processoAtual.getPC()+ 1);
+                    }
+                           
+                    else if ("E/S".equals(proxInstrucao)){
+                            
+                        System.out.println("E/S iniciada em " + processoAtual.processo.getNome());
+                            
+                        processoAtual.setEstado("BLOQUEADO");
+                        processoAtual.setTempoES(3);
+                        ListaBloqueados.listaBloqueados.add(processoAtual);
+                        ListaProntos.listaProntos.remove(processoAtual);
+                            
+                        System.out.println("Interrompendo "	+ processoAtual.processo.getNome() + " após " + count + " instruções");
+                            
+                        processoAtual.setPC(processoAtual.getPC()+ 1);
+                        break;
+                    }
                         
-                        /*if(ListaProntos.listaProntos.size() > 0){
+                    else if ("SAIDA".equals(proxInstrucao)){
+                            
+                        System.out.println(processoAtual.processo.getNome() + " terminado. X=" + processoAtual.getRegX() + ". Y=" + processoAtual.getRegY());
+                            
+                        processoAtual.setEstado("TERMINADO");
+                            
+                        ListaBloqueados.listaBloqueados.remove(processoAtual);
+                        ListaProntos.listaProntos.remove(processoAtual);
+                        TabelaProcessos.tabelaProcessos.remove(processoAtual);
+                            
+                        break;
+                    }
                         
-                            BCP aux = ListaProntos.listaProntosOrdenados.poll();
-                            if (aux.getCredito() == processoAtual.getCredito()){
+                    count++;
+
+                }
+                    
+                if(processoAtual.getEstado().equals("EXECUTANDO")) {
+                        
+                    count--;
+                    processoAtual.setEstado("PRONTO");
+                        
+                    if(ListaProntos.listaProntos.size() > 0){
+                        
+                        BCP aux = ListaProntos.listaProntosOrdenados.poll();
+                        if (aux.getCredito() == processoAtual.getCredito()){
                         
                             ListaProntos.listaProntos.addFirst(aux);
                             ListaProntos.listaProntos.addFirst(processoAtual);
                             
-                            }
-                        }*/
-                        
-                        //ListaProntos.listaProntos.addFirst(processoAtual);
-                        ListaProntos.listaProntos.addLast(processoAtual);
-                        System.out.println("Interrompendo "+ processoAtual.processo.getNome() + " após " + time+ " instruções");
+                        }
+                            
+                        else ListaProntos.listaProntos.addLast(processoAtual);
                     }
-                    
-                    interrupcoes++;
-                    quantumTotal++;
-                    instrucoes = instrucoes + time;
-                    
+                        
+                    System.out.println("Interrompendo "+ processoAtual.processo.getNome() + " após " + count+ " instruções");
                 }
+                    
+                interrupcoes++;
+                instrucoes = instrucoes + count;
+            }
                 
-                ListaBloqueados.diminuiTempoEspera();
-                ListaBloqueados.fimDeES();
-                ListaProntos.filaZerada();
+            ListaBloqueados.diminuiTempoEspera();
+            ListaBloqueados.fimDeES();
+            TabelaProcessos.tabelaZerada();
                     
             
-            }
+        }
             
-        System.out.println(interrupcoes);
-        System.out.println(quantumTotal);
-        System.out.println(instrucoes);
         resultadoInterrupcoes = (double) interrupcoes/maxProcessos;
-        resultadoInstrucoes = (double) instrucoes/quantumTotal;
+        resultadoInstrucoes = (double) instrucoes/interrupcoes;
         
         System.out.println("Média de interrupcoes = " + resultadoInterrupcoes);
         System.out.println("Média de instrucoes = " + resultadoInstrucoes);
